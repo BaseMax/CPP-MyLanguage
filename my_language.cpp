@@ -1,22 +1,11 @@
-#include "my_language.hpp"
+/*
+ * @Name:Cpp-MyLanguage
+ * @Date: 2021 March 2021
+ * @Author: Max Base
+ * @Repository: https://github.com/BaseMax/C-MyLanguage
+ */
 
-// std::map<std::pair<std::string, std::string>, std::map<std::string, std::string>> mymap;
-// std::map<std::string, std::string> v;
-// for(const auto& l : languages) {
-//   for (auto t : Globalization::GET["exceptions"]) {
-//     for (auto i : t["translations"]) {
-//       //std::cout << i["word_key"] << ":" << i["default_value"] << std::endl;
-//       std::cout << "l.second: " << l.second << std::endl;
-//       v.insert(std::pair(i["word_key"], i["default_value"]));
-//       mymap[std::pair(l.second ,"exceptions")] = v;
-//     }
-// }
-// }
-// for(const auto& c : mymap[std::pair("persian" ,"exceptions")]["error"]) {
-// std::cout << c;
-// }
-// }
-// std::map<std::pair<std::string, std::string>, std::map<std::string, std::string>> mymap;
+#include "my_language.hpp"
 
 void MyLanguage::display_word(myword w) {
     std::cout << "\t\t"<<"word_key: " << w.word_key<<"\n";
@@ -36,7 +25,7 @@ std::string MyLanguage::readFile(std::string filename) {
     return str;
 }
 
-void MyLanguage::logLangs() {
+void MyLanguage::logLangs(void) {
     std::cout << "---------------- [LOG LANGS] ---------------\n";
     for (auto itr = mymap.begin(); itr != mymap.end(); ++itr) {
         std::cout << itr->first << "\n";
@@ -44,7 +33,7 @@ void MyLanguage::logLangs() {
 
 }
 
-void MyLanguage::logWords() {
+void MyLanguage::logWords(void) {
     std::cout << "---------------- [LOG WORDS] ---------------\n";
     for (auto itr = mymap.begin(); itr != mymap.end(); ++itr) {
         std::cout << itr->first << "\n";
@@ -56,12 +45,12 @@ void MyLanguage::logWords() {
     }
 }
 
-void MyLanguage::log() {
+void MyLanguage::log(void) {
     logLangs();
     logWords();
 }
 
-void MyLanguage::parseLangs() {
+void MyLanguage::parseLangs(void) {
     for (auto t : Globalization::GET["languages"]) {
         std::string language = t["language"].get<std::string>();
         std::string code = t["code"].get<std::string>();
@@ -75,7 +64,7 @@ void MyLanguage::parseLangs() {
     }
 }
 
-void MyLanguage::parseWords() {
+void MyLanguage::parseWords(void) {
     for (auto t : Globalization::GET["exceptions"].items()) {
         std::map<std::string, myword> v;
         for (auto i : t.value()) {
@@ -99,11 +88,24 @@ void MyLanguage::parseWords() {
     }
 }
 
-void MyLanguage::parse() {
+/*
+ * parse()
+ * Arguments: void
+ * std::string filename: path or filename to load JSON file. e.g: input.json
+ */
+void MyLanguage::parse(void) {
+    // call parseLangs
     parseLangs();
+
+    // call parseWords
     parseWords();
 }
 
+/*
+ * parseFile(filename)
+ * Arguments:
+ * std::string filename: path or filename to load JSON file. e.g: input.json
+ */
 void MyLanguage::parseFile(std::string filename) {
     // TODO
     // struct Globalization {
@@ -113,6 +115,12 @@ void MyLanguage::parseFile(std::string filename) {
     parse();
 }
 
+/*
+ * hasKey(lang, key)
+ * Arguments:
+ * std::string lang: code of the language structure. e.g: en_US, or fa_IR
+ * std::string key: word_key of the `myword` structure. e.g: error, warning
+ */
 bool MyLanguage::hasKey(std::string lang, std::string key) {
     for (auto itr = mymap.begin(); itr != mymap.end(); ++itr) {
         if(itr->first != lang) {
@@ -129,6 +137,12 @@ bool MyLanguage::hasKey(std::string lang, std::string key) {
     return false;
 }
 
+/*
+ * getKey(lang, key)
+ * Arguments:
+ * std::string lang: code of the language structure. e.g: en_US, or fa_IR
+ * std::string key: word_key of the `myword` structure. e.g: error, warning
+ */
 MyLanguage::myword MyLanguage::getKey(std::string lang, std::string key) {
     for (auto itr = mymap.begin(); itr != mymap.end(); ++itr) {
         if(itr->first != lang) {
