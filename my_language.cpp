@@ -57,8 +57,8 @@ void MyLanguage::logWords() {
 }
 
 void MyLanguage::log() {
-	logLangs();
-	logWords();
+    logLangs();
+    logWords();
 }
 
 void MyLanguage::parseLangs() {
@@ -78,10 +78,10 @@ void MyLanguage::parseLangs() {
 void MyLanguage::parseWords() {
     for (auto t : Globalization::GET["exceptions"].items()) {
         std::map<std::string, myword> v;
-        std::cout << t.key() << "\n";
         for (auto i : t.value()) {
             // std::cout << i["word_key"].get<std::string>() << ":" << i["default_value"].get<std::string>() << std::endl;
             myword v_myword = {
+                false,
                 i["word_key"].get<std::string>(),
                 i["module"].get<std::string>(),
                 i["default_value"].get<std::string>(),
@@ -100,22 +100,50 @@ void MyLanguage::parseWords() {
 }
 
 void MyLanguage::parse() {
-	parseLangs();
-	parseWords();
+    parseLangs();
+    parseWords();
 }
 
 void MyLanguage::parseFile(std::string filename) {
-	// TODO
-	// struct Globalization {
-	// 	inline static JSon GET = JSon::parse(if_streamer("input.json"));
-	// };
+    // TODO
+    // struct Globalization {
+    //  inline static JSon GET = JSon::parse(if_streamer("input.json"));
+    // };
 
-	parse();
+    parse();
 }
 
-std::string MyLanguage::getKey(std::string lang, std::string key) {
-	parse();
-	return "...";
+bool MyLanguage::hasKey(std::string lang, std::string key) {
+    for (auto itr = mymap.begin(); itr != mymap.end(); ++itr) {
+        if(itr->first != lang) {
+            continue;
+        }
+        auto childs = itr->second;
+        for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
+            if(itr2->first == key) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+MyLanguage::myword MyLanguage::getKey(std::string lang, std::string key) {
+    for (auto itr = mymap.begin(); itr != mymap.end(); ++itr) {
+        if(itr->first != lang) {
+            continue;
+        }
+        auto childs = itr->second;
+        for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
+            if(itr2->first == key) {
+                return itr2->second;
+            }
+        }
+    }
+
+    // TODO: use pointer and: return NULL;
+    return {true};
 }
 
 
