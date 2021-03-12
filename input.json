@@ -1,0 +1,48 @@
+{
+	"languages": [
+		{
+			"language": "english",
+			"code": "en_US",
+			"ltr": true
+		},
+		{
+			"language": "persian",
+			"code": "fa_IR",
+			"ltr": false
+		}
+	],
+	"exceptions": {
+		"en_US": [
+			{
+				"word_key": "error",
+				"module": "core",
+				"default_value": "Error",
+				"custom_value": "",
+				"status": true
+			},
+			{
+				"word_key": "warning",
+				"module": "core",
+				"default_value": "Warning",
+				"custom_value": "",
+				"status": true
+			}
+		],
+		"fa_IR": [
+			{
+				"word_key": "error",
+				"module": "core",
+				"default_value": "خطا",
+				"custom_value": "",
+				"status": true
+			},
+			{
+				"word_key": "warning",
+				"module": "core",
+				"default_value": "اخطار",
+				"custom_value": "",
+				"status": true
+			}
+		]
+	}
+}
