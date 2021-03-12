@@ -20,7 +20,9 @@ class MyLanguage {
 	    std::string code;
 	    bool ltr;
 	} mylanguage;
+
 	typedef struct {
+		bool has_error;
 	    std::string word_key;
 	    std::string module;
 	    std::string default_value;
@@ -30,14 +32,19 @@ class MyLanguage {
 
 	public:
 		void parse();
+		void parseLangs();
+		void parseWords();
+
 		void parseFile(std::string filename);
 		void display_word(myword w);
 
 		void log();
-		void MyLanguage::logLangs();
-		void MyLanguage::logWords();
+		void logLangs();
+		void logWords();
 
-		std::string MyLanguage::getKey(std::string lang, std::string key);
+
+		bool hasKey(std::string lang, std::string key);
+		myword getKey(std::string lang, std::string key);
 
 		std::string readFile(std::string filename);
 
