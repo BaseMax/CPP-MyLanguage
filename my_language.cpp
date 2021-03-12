@@ -1,8 +1,8 @@
 /*
- * @Name:Cpp-MyLanguage
+ * @Name: Cpp-MyLanguage
  * @Date: 2021 March 2021
  * @Author: Max Base
- * @Repository: https://github.com/BaseMax/C-MyLanguage
+ * @Repository: https://github.com/BaseMax/CPP-MyLanguage
  */
 
 #include "my_language.hpp"
@@ -159,5 +159,3 @@ MyLanguage::myword MyLanguage::getKey(std::string lang, std::string key) {
     // TODO: use pointer and: return NULL;
     return {true};
 }
-
-
