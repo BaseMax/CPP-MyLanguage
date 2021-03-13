@@ -8,11 +8,11 @@
 #include "my_language.hpp"
 
 void MyLanguage::display_word(myword w) {
-    std::cout << "\t\t"<<"word_key: " << w.word_key<<"\n";
-    std::cout << "\t\t"<<"module: " << w.module<<"\n";
-    std::cout << "\t\t"<<"default_value: " << w.default_value<<"\n";
-    std::cout << "\t\t"<<"custom_value: " << w.custom_value<<"\n";
-    std::cout << "\t\t"<<"status: " << w.status<<"\n";
+    std::cout << "\t\t\t"<<"word_key: " << w.word_key<<"\n";
+    std::cout << "\t\t\t"<<"module: " << w.module<<"\n";
+    std::cout << "\t\t\t"<<"default_value: " << w.default_value<<"\n";
+    std::cout << "\t\t\t"<<"custom_value: " << w.custom_value<<"\n";
+    std::cout << "\t\t\t"<<"status: " << w.status<<"\n";
 }
 
 std::string MyLanguage::readFile(std::string filename) {
@@ -26,7 +26,7 @@ std::string MyLanguage::readFile(std::string filename) {
 }
 
 void MyLanguage::logLangs(void) {
-    std::cout << "logLangs\n";
+    // std::cout << "logLangs\n";
     std::cout << "---------------- [LOG LANGS] ---------------\n";
     for (auto s = mymap.begin(); s != mymap.end(); ++s) {
         std::cout << s->first << ":\n";
@@ -38,15 +38,15 @@ void MyLanguage::logLangs(void) {
 }
 
 void MyLanguage::logWords(void) {
-    std::cout << "logWords\n";
+    // std::cout << "logWords\n";
     std::cout << "---------------- [LOG WORDS] ---------------\n";
     for (auto s = mymap.begin(); s != mymap.end(); ++s) {
         std::cout << s->first << ":\n";
         for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-            std::cout << itr->first << "\n";
+            std::cout << "\t"<<itr->first << "\n";
             auto childs = itr->second;
             for (auto itr = childs.begin(); itr != childs.end(); ++itr) {
-                std::cout << "\t" << itr->first << "\n";
+                std::cout << "\t\t" << itr->first << "\n";
                 display_word(itr->second);
             }
         }
@@ -78,7 +78,7 @@ void MyLanguage::parseLangs(void) {
 }
 
 void MyLanguage::parseWords(void) {
-    std::cout << "parseWords\n";
+    // std::cout << "parseWords\n";
     auto items = Globalization::GET.items();
     for (auto& [key, value] : items) {
         // key values are: exceptions, global, languages, ...
