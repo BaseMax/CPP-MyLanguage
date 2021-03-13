@@ -43,5 +43,15 @@ int main(int argc, const char * argv[]) {
         std::cout << "A error...\n";
     }
 
+    std::cout << "------------------------------ [ TEST getKey in another sheet ] -----------------------------\n";
+
+    auto k = lang.getKey("global", "fa_IR", "name");
+    if(k.has_error) {
+        std::cout << "A error...\n";
+    }
+    else {
+        std::cout << k.default_value << std::endl;
+    }
+
     return 0;
 }
