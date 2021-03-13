@@ -41,12 +41,12 @@ void MyLanguage::logWords(void) {
     // std::cout << "logWords\n";
     std::cout << "---------------- [LOG WORDS] ---------------\n";
     for (auto s = mymap.begin(); s != mymap.end(); ++s) {
-        std::cout << s->first << ":\n";
+        // std::cout << s->first << ":\n";
         for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-            std::cout << "\t"<<itr->first << "\n";
+            // std::cout << "\t"<<itr->first << "\n";
             auto childs = itr->second;
             for (auto itr = childs.begin(); itr != childs.end(); ++itr) {
-                std::cout << "\t\t" << itr->first << "\n";
+                // std::cout << "\t\t" << itr->first << "\n";
                 display_word(itr->second);
             }
         }
