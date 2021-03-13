@@ -1,6 +1,6 @@
 /*
  * @Name: Cpp-MyLanguage
- * @Date: 2021 March 12
+ * @Date: 2021 March 2021
  * @Author: Max Base
  * @Repository: https://github.com/BaseMax/CPP-MyLanguage
  */
@@ -50,13 +50,21 @@ class MyLanguage {
         void logWords(void);
 
 
-        bool hasKey(std::string lang, std::string key);
-        myword getKey(std::string lang, std::string key);
+        bool hasKey(std::string sheet, std::string lang, std::string key);
+        myword getKey(std::string sheet, std::string lang, std::string key);
 
         std::string readFile(std::string filename);
 
     private:
         std::map<std::string, mylanguage> mylanguages;
-        std::map<std::string, std::map<std::string, myword>> mymap;
+        std::map<
+            std::string,
+            std::map<
+                std::string,
+                std::map<
+                    std::string, myword
+                >
+            >
+        > mymap;
 };
 
