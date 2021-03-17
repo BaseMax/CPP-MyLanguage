@@ -1,5 +1,20 @@
 # C++ MyLanguage
 
+If your software is a bit international and you want to handle and manage all of strings and languages from server.
+
+**JSON** is a good format and you can easily seperate words and strings into diffrent parts. But main problem is how to parse a complex **JSON** structure in c+ and use this.
+
+We need to parse JSON and access to each element and value of JSON at the runtime.
+In this library I did implenment some useful function to easily parse and use JSON structure and store in a `std::map`, So you can easily access to strings anywhere.
+
+## Using
+
+```cpp
+#include "my_language.hpp"
+```
+
+## Sample program
+
 ```cpp
 MyLanguage lang;
 // TODO: lang.parseFile("input.json");
@@ -51,3 +66,4 @@ else {
     std::cout << k.default_value << std::endl;
 }
 ```
+
