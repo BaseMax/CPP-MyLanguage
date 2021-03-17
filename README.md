@@ -11,6 +11,8 @@ If your software is a bit international and you want to handle and manage all of
 We need to parse JSON and access to each element and value of JSON at the runtime.
 In this library I did implenment some useful function to easily parse and use JSON structure and store in a `std::map`, So you can easily access to strings anywhere.
 
+You can check the [input.json](input.json) file to better understand how the library works.
+
 ## Purpose of library 
 
 Did you translate words to different languages? Do your software support multi language and you want to handle languages without suffering.
