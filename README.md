@@ -1,5 +1,9 @@
 # C++ MyLanguage
 
+My Language Cpp TINY Library
+
+> A c++ library to handle and manage all of words/strings and languages of a software in a JSON structure.
+
 If your software is a bit international and you want to handle and manage all of strings and languages from server.
 
 **JSON** is a good format and you can easily seperate words and strings into diffrent parts. But main problem is how to parse a complex **JSON** structure in c+ and use this.
