@@ -23,6 +23,13 @@ So you can try or improve this library for your use.
 #include "my_language.hpp"
 ```
 
+and compile sample program using:
+
+```
+g++ main.cpp my_language.cpp -o mylanguage-cpp-test
+./mylanguage-cpp-test
+```
+
 ## Sample program
 
 ```cpp
