@@ -18,31 +18,100 @@ using JSonException = nlohmann::detail::exception;
 using if_streamer = std::ifstream;
 
 class Language {
+  /**
+   * @brief The Language private data structure
+   */
   struct LanguageStruct;
 
  public:
-  [[nodiscard]] bool init() noexcept;
+  /**
+   * @brief Returns the file name, which is set with the setFile() function.
+   * @return Returns @var `m_filename` value.
+   * @see getFile()
+   */
   std::string getFile() const;
 
   /**
   * @brief Set the input JSON file.
   * @param path or filename to load JSON file. e.g: input.json
+  * @see getFile()
   */
   void setFile(const std::string& filename);
 
+  /**
+   * @brief Start parsing the JSON.
+   * @see init()
+   * @see parseLangs()
+   * @see parseWords()
+   */
   void parse();
-  void parseLangs();
-  void parseWords();
-  void displayWord(LanguageStruct const& w);
+
+  /**
+   * @brief Just for logging.
+   */
   void log();
-  void logLangs();
-  void logWords();
+
+  /**
+   * @brief Checks for the existence of [shee][lang][key]
+   * @param sheet
+   * @param lang
+   * @param key
+   * @return Returns true in case of success.
+   */
   bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
+  /**
+   * @brief Returns [sheet][lang][key] value of the JSON.
+   * @param sheet
+   * @param lang
+   * @param key
+   * @return Returns a LanguageStruct::has_error == false in case of success.
+   */
   LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
-  // LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
 
+
+ private:
+  /**
+   * @brief Reads all @p filename content and return it.
+   * @param filename
+   * @return Returns a std::string::empty() == false in case of success.
+   */
   std::string readFile(const std::string&  filename);
+
+  /**
+   * @brief Just a logging function.
+   * @see log();
+   */
+  void logWords();
+
+  /**
+   * @brief Just a logging function
+   * @see log();
+   */
+  void logLangs();
+
+  /**
+   * @brief Just a logging function.
+   * @param w
+   * @see logWords();
+   */
+  void displayWord(LanguageStruct const& w);
+
+  /**
+   * @brief Parse @var `m_filename` json
+   * @return Return true in case of success.
+   */
+  [[nodiscard]] bool init() noexcept;
+
+  /**
+   * @brief Parse the Language section of the JSON
+   */
+  void parseLangs();
+
+  /**
+   * @brief /// FIXME: I don't know.
+   */
+  void parseWords();
 
  private:
   struct LanguageStruct final {
@@ -60,7 +129,6 @@ class Language {
 
  private:
   JSon m_parsed_json;
-  // static LanguageStruct* m_instance;
   LanguageStruct m_instance;
 
   std::string m_filename;
