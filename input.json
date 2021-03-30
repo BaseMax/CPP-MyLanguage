@@ -3,12 +3,14 @@
     {
       "language": "english",
       "code": "en_US",
-      "ltr": true
+      "ltr": true,
+      "status": true
     },
     {
       "language": "persian",
       "code": "fa_IR",
-      "ltr": false
+      "ltr": false,
+      "status": true
     }
   ],
   "global": {
@@ -17,15 +19,13 @@
         "word_key": "name",
         "module": "system",
         "default_value": "Tegra CMS",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       },
       {
         "word_key": "version",
         "module": "system",
         "default_value": "Version",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       }
     ],
     "fa_IR": [
@@ -33,15 +33,13 @@
         "word_key": "name",
         "module": "system",
         "default_value": "سیستم مدیریت محتوای تِگرا",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       },
       {
         "word_key": "version",
         "module": "system",
         "default_value": "نسخه",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       }
     ]
   },
@@ -51,15 +49,13 @@
         "word_key": "error",
         "module": "core",
         "default_value": "Error",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       },
       {
         "word_key": "warning",
         "module": "core",
         "default_value": "Warning",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       }
     ],
     "fa_IR": [
@@ -67,15 +63,13 @@
         "word_key": "error",
         "module": "core",
         "default_value": "خطا",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       },
       {
         "word_key": "warning",
         "module": "core",
         "default_value": "اخطار",
-        "custom_value": "",
-        "status": true
+        "custom_value": ""
       }
     ]
   }

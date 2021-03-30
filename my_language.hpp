@@ -60,13 +60,17 @@ public:
 
   void deleteInstance();
 
+  LanguageStruct();
+
   LanguageStruct(
       bool ltr,
       const std::string& word_key,
       const std::string& module,
       const std::string& default_value ,
-      const std::string& custom_value,
-      bool status);
+      const std::string& custom_value
+      // ,
+      // bool status
+      );
 
 public:
   std::string language() const;
@@ -77,21 +81,19 @@ public:
   std::string module() const;
   std::string default_value() const;
   std::string custom_value() const;
-  bool status() const;
+  // bool status() const;
 
 private:
-  static LanguageStruct* m_instance;
-
   bool m_ltr = false;
   std::string m_language;
   std::string  m_code;
 
-  bool m_has_error;
+  bool m_has_error = true;
   std::string m_word_key;
   std::string m_module;
   std::string m_default_value;
   std::string m_custom_value;
-  bool m_status;
+  // bool m_status;
 
 };
 
@@ -142,12 +144,15 @@ public:
 
   bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
-  // std::shared_ptr<LanguageStruct> getString(const std::string& sheet, const std::string& lang, const std::string& key);
-  LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
+  std::shared_ptr<LanguageStruct> getString(const std::string& sheet, const std::string& lang, const std::string& key);
+  // LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
 
   std::string readFile(const std::string&  filename);
 
 private:
+  // static LanguageStruct* m_instance;
+  LanguageStruct m_instance;
+
   std::string m_filename;
   std::map<std::string, LanguageStruct> m_languages;
   std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>> m_map;

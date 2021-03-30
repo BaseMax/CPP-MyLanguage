@@ -15,18 +15,25 @@
 
 std::unique_ptr<LanguageStruct> LanguageStruct::getInstance;
 
+LanguageStruct::LanguageStruct(){
+  m_has_error = true;
+}
+
 LanguageStruct::LanguageStruct(bool ltr,
                                const std::string& word_key,
                                const std::string& module,
                                const std::string& default_value ,
-                               const std::string& custom_value,
-                               bool status) :
+                               const std::string& custom_value
+                               // ,
+                               // bool status
+                               ) :
                                               m_ltr(ltr),
                                               m_word_key(word_key),
                                               m_module(module),
                                               m_default_value(default_value),
-                                              m_custom_value(custom_value),
-                                              m_status(status)
+                                              m_custom_value(custom_value)
+                                              // ,
+                                              // m_status(status)
 
 {
 
@@ -40,6 +47,7 @@ Language::Language(){
 Language::~Language() {
 
 }
+
 
 bool LanguageStruct::ltr() const {
   return m_ltr;
@@ -73,16 +81,16 @@ std::string LanguageStruct::custom_value() const {
   return m_custom_value;
 }
 
-bool LanguageStruct::status() const {
-  return m_status;
-}
+// bool LanguageStruct::status() const {
+//   return m_status;
+// }
 
 void Language::displayWord(LanguageStruct w) {
   std::cout << "\t\t\t"<<"word_key: " << w.word_key() <<"\n";
   std::cout << "\t\t\t"<<"module: " << w.module() <<"\n";
   std::cout << "\t\t\t"<<"default_value: " << w.default_value() <<"\n";
   std::cout << "\t\t\t"<<"custom_value: " << w.custom_value() <<"\n";
-  std::cout << "\t\t\t"<<"status: " << w.status() <<"\n";
+  // std::cout << "\t\t\t"<<"status: " << w.status() <<"\n";
 }
 
 std::string Language::readFile(const std::string& filename) {
@@ -145,7 +153,7 @@ void Language::parseLangs() {
   }
 }
 
-    void Language::parseWords() {
+void Language::parseWords() {
   // std::cout << "parseWords\n";
   auto items = GET.items();
   for (const auto& [key, value] : items) {
@@ -170,7 +178,7 @@ void Language::parseLangs() {
             i["module"].get<std::string>(),
             i["default_value"].get<std::string>(),
             i["custom_value"].get<std::string>(),
-            i["status"],
+            // i["status"],
             };
         v.insert(std::pair<std::string, LanguageStruct>(i["word_key"].get<std::string>(), v_myword));
       }
@@ -233,7 +241,7 @@ bool Language::hasString(const std::string& sheet, const std::string& lang, cons
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
-LanguageStruct Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
+std::shared_ptr<LanguageStruct> Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
   for (auto s = m_map.begin(); s != m_map.end(); ++s) {
     if(s->first != sheet) {
       continue;
@@ -251,21 +259,27 @@ LanguageStruct Language::getString(const std::string& sheet, const std::string& 
 
           // return std::shared_ptr<LanguageStruct>(res);
 
-          // LanguageStruct res = itr2->second;
-          return itr2->second;
+          LanguageStruct res = itr2->second;
+          // return res;
+          return std::make_shared<LanguageStruct>(res);
+          // return itr2->second;
         }
       }
     }
   }
 
   // return std::shared_ptr<LanguageStruct>();
-  // return std::shared_ptr<LanguageStruct>(nullptr);
+  // return std::shared_ptr<LanguageStruct>(m_instance);
+  return std::make_shared<LanguageStruct>(m_instance);
+  // return std::make_shared<LanguageStruct>(nullptr);
+  // return m_instance;
+  // return std::make_shared<LanguageStruct>(LanguageStruct::getInstance);
 
   // return NULL;
 
   // return LanguageStruct::getInstance;
   // return *LanguageStruct::getInstance;
 
-  return {false,"","","","",false};
+  // return {false,"","","","",false};
   // return {};
 }
