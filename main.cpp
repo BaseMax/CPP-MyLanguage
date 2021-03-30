@@ -9,17 +9,17 @@ int main() {
 
   std::cout << "------------------------------ [ TEST getString ] -----------------------------\n";
 
-  std::cout << lang.getString("exceptions", "fa_IR", "error").default_value() << "\n";
-  std::cout << lang.getString("exceptions", "en_US", "error").default_value() << "\n";
+  std::cout << lang.getString("exceptions", "fa_IR", "error").default_value << "\n";
+  std::cout << lang.getString("exceptions", "en_US", "error").default_value << "\n";
 
   std::cout << "------------------------------ [ TEST getString has_error ] -----------------------------\n";
 
   auto const i = lang.getString("exceptions", "en_US", "_bad_keyword_bad_");
   std::cout << "...\n";
-  if (i.has_error()) {
+  if (i.has_error) {
     std::cout << "A error...\n";
   } else {
-    std::cout << i.has_error() << "\n";
+    std::cout << i.has_error << "\n";
   }
 
 
@@ -42,10 +42,10 @@ int main() {
 
   std::cout << "------------------------------ [ TEST getString in another sheet ] -----------------------------\n";
   auto const k = lang.getString("global", "fa_IR", "name");
-  if (k.has_error()) {
+  if (k.has_error) {
     std::cout << "A error...\n";
   } else {
-    std::cout << k.default_value() << std::endl;
+    std::cout << k.default_value << std::endl;
   }
 
   return 0;

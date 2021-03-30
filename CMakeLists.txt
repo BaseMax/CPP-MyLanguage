@@ -15,7 +15,7 @@ project(mylanguage-cpp)
 ###   - Minumum Qt standard sets to 5.12.0
 ###
 ###
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

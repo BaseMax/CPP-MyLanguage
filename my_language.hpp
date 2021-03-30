@@ -53,43 +53,17 @@ using if_streamer = std::ifstream;
 
 //};
 
-class LanguageStruct {
- public:
-  LanguageStruct();
-  LanguageStruct(
-      bool ltr,
-      const std::string& word_key,
-      const std::string& module,
-      const std::string& default_value,
-      const std::string& custom_value
-      // ,
-      // bool status
-  );
+struct LanguageStruct final {
+  bool ltr = false;
+  std::string language;
+  std::string  code;
 
-  inline static std::unique_ptr<LanguageStruct> getInstance;
-  void deleteInstance();
-
-  std::string language() const;
-  std::string code() const;
-  bool ltr() const;
-  bool has_error() const;
-  std::string word_key() const;
-  std::string module() const;
-  std::string default_value() const;
-  std::string custom_value() const;
-  // bool status() const;
-
- private:
-  bool m_ltr;
-  std::string m_language;
-  std::string  m_code;
-
-  bool m_has_error;
-  std::string m_word_key;
-  std::string m_module;
-  std::string m_default_value;
-  std::string m_custom_value;
-  // bool m_status;
+  bool has_error = true;
+  std::string word_key;
+  std::string module;
+  std::string default_value;
+  std::string custom_value;
+  // bool status;
 
 };
 

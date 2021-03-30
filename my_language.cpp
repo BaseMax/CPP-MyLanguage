@@ -7,34 +7,6 @@
 
 #include "my_language.hpp"
 
-//LanguageStruct *LanguageStruct::getInstance()
-//{
-//  return this;
-//}
-
-LanguageStruct::LanguageStruct() : m_ltr(false), m_has_error(true) {
-}
-
-LanguageStruct::LanguageStruct(bool ltr,
-                               const std::string& word_key,
-                               const std::string& module,
-                               const std::string& default_value,
-                               const std::string& custom_value
-                               // ,
-                               // bool status
-                              ) :
-  m_ltr(ltr),
-  m_word_key(word_key),
-  m_module(module),
-  m_default_value(default_value),
-  m_custom_value(custom_value)
-  // ,
-  // m_status(status)
-
-{
-
-}
-
 bool Language::init() noexcept {
   bool res = true;
   try {
@@ -54,47 +26,11 @@ void Language::setFile(const std::string& filename) {
   m_filename = filename;
 }
 
-bool LanguageStruct::ltr() const {
-  return m_ltr;
-}
-
-std::string LanguageStruct::language() const {
-  return m_language;
-}
-
-std::string LanguageStruct::code() const {
-  return m_code;
-}
-
-bool LanguageStruct::has_error() const {
-  return m_has_error;
-}
-
-std::string LanguageStruct::word_key() const {
-  return m_word_key;
-}
-
-std::string LanguageStruct::module() const {
-  return m_module;
-}
-
-std::string LanguageStruct::default_value() const {
-  return m_default_value;
-}
-
-std::string LanguageStruct::custom_value() const {
-  return m_custom_value;
-}
-
-// bool LanguageStruct::status() const {
-//   return m_status;
-// }
-
 void Language::displayWord(const LanguageStruct& w) {
-  std::cout << "\t\t\t" << "word_key: " << w.word_key() << "\n";
-  std::cout << "\t\t\t" << "module: " << w.module() << "\n";
-  std::cout << "\t\t\t" << "default_value: " << w.default_value() << "\n";
-  std::cout << "\t\t\t" << "custom_value: " << w.custom_value() << "\n";
+  std::cout << "\t\t\t" << "word_key: " << w.word_key << "\n";
+  std::cout << "\t\t\t" << "module: " << w.module << "\n";
+  std::cout << "\t\t\t" << "default_value: " << w.default_value << "\n";
+  std::cout << "\t\t\t" << "custom_value: " << w.custom_value << "\n";
   // std::cout << "\t\t\t"<<"status: " << w.status() <<"\n";
 }
 
@@ -178,11 +114,13 @@ void Language::parseWords() {
         // std::cout << i << "\n";
         // std::cout << i["word_key"].get<std::string>() << ":" << i["default_value"].get<std::string>() << std::endl;
         LanguageStruct v_myword = {
-          false,
-          i["word_key"].get<std::string>(),
-          i["module"].get<std::string>(),
-          i["default_value"].get<std::string>(),
-          i["custom_value"].get<std::string>(),
+          .ltr = false,
+          .language = std::string(),
+          .code = std::string(),
+          .word_key = i["word_key"].get<std::string>(),
+          .module = i["module"].get<std::string>(),
+          .default_value = i["default_value"].get<std::string>(),
+          .custom_value = i["custom_value"].get<std::string>(),
           // i["status"],
         };
         v.insert(std::pair<std::string, LanguageStruct>(i["word_key"].get<std::string>(), v_myword));
