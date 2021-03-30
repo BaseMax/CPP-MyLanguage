@@ -1,10 +1,11 @@
+#include <filesystem>
 #include <iostream>
 
 #include "Language/my_language.hpp"
 
 int main() {
   Core::Utility::Language lang;
-  lang.setFile("../test/input.json");
+  lang.setFile(std::filesystem::current_path() / "../test/input.json");
   lang.parse();
   lang.log();
 
