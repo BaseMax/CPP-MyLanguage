@@ -53,18 +53,18 @@ class Language {
 
   /**
    * @brief Checks for the existence of [shee][lang][key]
-   * @param sheet
-   * @param lang
-   * @param key
+   * @param sheet: name of your selected sheet
+   * @param lang: code of the language structure. e.g: en_US, or fa_IR
+   * @param key: word_key of the `myword` structure. e.g: error, warning
    * @return Returns true in case of success.
    */
   bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
   /**
    * @brief Returns [sheet][lang][key] value of the JSON.
-   * @param sheet
-   * @param lang
-   * @param key
+   * @param sheet: name of your selected sheet
+   * @param lang: code of the language structure. e.g: en_US, or fa_IR
+   * @param key: word_key of the `myword` structure. e.g: error, warning
    * @return Returns a LanguageStruct::has_error == false in case of success.
    */
   LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
