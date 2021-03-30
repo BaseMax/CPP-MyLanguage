@@ -119,7 +119,7 @@ class Language {
   void logWords();
   bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
-  LanguageStruct::Sptr getString(const std::string& sheet, const std::string& lang, const std::string& key);
+  LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
   // LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
 
   std::string readFile(const std::string&  filename);

@@ -246,7 +246,7 @@ bool Language::hasString(const std::string& sheet, const std::string& lang, cons
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
-LanguageStruct::Sptr Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
+LanguageStruct Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
   for (auto const& __sheet : m_map) {
     if (__sheet.first != sheet) {
       continue;
@@ -262,10 +262,8 @@ LanguageStruct::Sptr Language::getString(const std::string& sheet, const std::st
           // return res;
 
           // return std::shared_ptr<LanguageStruct>(res);
-
-          LanguageStruct res = itr2.second;
           // return res;
-          return std::make_shared<LanguageStruct>(res);
+          return itr2.second;
           // return itr2->second;
         }
       }
@@ -274,7 +272,7 @@ LanguageStruct::Sptr Language::getString(const std::string& sheet, const std::st
 
   // return std::shared_ptr<LanguageStruct>();
   // return std::shared_ptr<LanguageStruct>(m_instance);
-  return std::make_shared<LanguageStruct>(m_instance);
+  return m_instance;
   // return std::make_shared<LanguageStruct>(nullptr);
   // return m_instance;
   // return std::make_shared<LanguageStruct>(LanguageStruct::getInstance);
