@@ -17,7 +17,6 @@ int main(int argc, const char * argv[]) {
 
 
 
-
     std::cout << "------------------------------ [ TEST getString has_error ] -----------------------------\n";
 
     auto i = lang.getString("exceptions", "en_US", "_bad_keyword_bad_");
@@ -30,12 +29,11 @@ int main(int argc, const char * argv[]) {
     }
 
 
-
     std::cout << "------------------------------ [ TEST hasString ] -----------------------------\n";
 
     bool j = lang.hasString("exceptions", "en_US", "_bad_keyword_bad_");
     if(j == true) {
-        std::cout << "No error!\n" << "\n";
+        std::cout << "No error!\n";
     }
     else {
         std::cout << "A error...\n";
@@ -43,7 +41,7 @@ int main(int argc, const char * argv[]) {
 
     j = lang.hasString("exceptions", "en_US", "error");
     if(j == true) {
-        std::cout << "No error!\n" << "\n";
+        std::cout << "No error!\n";
     }
     else {
         std::cout << "A error...\n";
