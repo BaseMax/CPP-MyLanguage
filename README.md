@@ -36,7 +36,7 @@ g++ main.cpp my_language.cpp -o mylanguage-cpp-test
 
 ```cpp
 MyLanguage lang;
-// TODO: lang.parseFile("input.json");
+TODO: lang.setFile("input.json");
 lang.parse();
 
 lang.log();
