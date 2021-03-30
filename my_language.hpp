@@ -12,46 +12,10 @@
 
 #include "json/json.hpp"
 
+namespace Core::Utility {
 using JSon = nlohmann::json;
 using JSonException = nlohmann::detail::exception;
-
 using if_streamer = std::ifstream;
-
-//class Globalization {
-//public:
-//  Globalization() {
-
-//  }
-//  ~Globalization() {
-
-//  }
-//  static JSon parse() {
-//    JSon j;
-//    try {
-//      j = JSon::parse(if_streamer(getFile()));
-//    } catch (JSon::exception& e) {
-//      std::clog << e.what() << "\n";
-//    }
-//    return j;
-//  }
-
-//  inline static JSon GET = parse();
-
-//  inline static std::string getFile() noexcept {
-//    return m_filename;
-//  }
-
-//  void setFile(const std::string& filename) {
-//    if(m_filename != filename || m_filename.empty()) {
-//      m_filename = filename;
-//    }
-//  }
-
-//private:
-//  inline static std::string m_filename;
-
-
-//};
 
 class Language {
   struct LanguageStruct;
@@ -103,4 +67,4 @@ class Language {
   std::map<std::string, LanguageStruct> m_languages;
   std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>> m_map;
 };
-
+} // namespace Core::Utility

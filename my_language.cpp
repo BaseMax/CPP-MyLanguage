@@ -7,6 +7,7 @@
 
 #include "my_language.hpp"
 
+namespace Core::Utility {
 bool Language::init() noexcept {
   bool res = true;
   try {
@@ -193,3 +194,4 @@ Language::LanguageStruct Language::getString(const std::string& sheet, const std
   // return {false,"","","","",false};
   // return {};
 }
+} // namespace Core::Utility

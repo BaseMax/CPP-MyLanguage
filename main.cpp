@@ -2,7 +2,7 @@
 #include "my_language.hpp"
 
 int main() {
-  Language lang;
+  Core::Utility::Language lang;
   lang.setFile("input.json");
   lang.parse();
   lang.log();
