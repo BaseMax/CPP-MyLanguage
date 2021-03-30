@@ -1,6 +1,6 @@
 /*
  * @Name: Cpp-MyLanguage
- * @Date: 12 March 2021, 13 March 2021
+ * @Date: 12 March 2021; 13 March 2021; 28, 29, 30 March 2021
  * @Author: Max Base
  * @Repository: https://github.com/BaseMax/CPP-MyLanguage
  */
@@ -10,61 +10,86 @@
 #include <map>
 #include <sstream> //std::stringstream
 
-#include "json.hpp"
+#include "json/json.hpp"
 
 using JSon = nlohmann::json;
 
 using if_streamer = std::ifstream;
 
 struct Globalization {
-  inline static JSon GET = JSon::parse(if_streamer("input.json"));
+  inline static JSon GET = JSon::parse(if_streamer("/Users/compez/drogon/build/Tegra/translations/contents2.json"));
 };
 
-class MyLanguage {
+class LanguageStruct {
+public:
 
-    typedef struct {
-        std::string language;
-        std::string code;
-        bool ltr;
-    } mylanguage;
+  static std::shared_ptr<LanguageStruct> getInstance;
+  //static LanguageStruct* getInstance;
 
-    typedef struct {
-        bool has_error;
-        std::string word_key;
-        std::string module;
-        std::string default_value;
-        std::string custom_value;
-        bool status;
-    } myword;
+  void deleteInstance();
 
-    public:
-        void parse(void);
-        void parseLangs(void);
-        void parseWords(void);
+  LanguageStruct(
+      bool ltr,
+      const std::string& word_key,
+      const std::string& module,
+      const std::string& default_value ,
+      const std::string& custom_value,
+      bool status);
+public:
+  std::string language() const;
+  std::string code() const;
+  bool ltr() const;
+  bool has_error() const;
+  std::string word_key() const;
+  std::string module() const;
+  std::string default_value() const;
+  std::string custom_value() const;
+  bool status() const;
 
-        void parseFile(std::string filename);
-        void display_word(myword w);
+private:
 
-        void log(void);
-        void logLangs(void);
-        void logWords(void);
+  static LanguageStruct* m_instance;
 
+  bool m_ltr = false;
+  std::string m_language;
+  std::string  m_code;
 
-        bool hasKey(std::string sheet, std::string lang, std::string key);
-        myword getKey(std::string sheet, std::string lang, std::string key);
+  bool m_has_error;
+  std::string m_word_key;
+  std::string m_module;
+  std::string m_default_value;
+  std::string m_custom_value;
+  bool m_status;
 
-        std::string readFile(std::string filename);
-
-    private:
-        std::map<std::string, mylanguage> mylanguages;
-        std::map<
-            std::string,
-            std::map<
-                std::string,
-                std::map<
-                    std::string, myword
-                >
-            >
-        > mymap;
 };
 
+class Language {
+public:
+  Language();
+  ~Language();
+
+public:
+  void parse();
+  void parseLangs();
+  void parseWords();
+
+  void parseFile(const std::string&  filename);
+  void displayWord(LanguageStruct w);
+
+  void log();
+  void logLangs();
+  void logWords();
+
+
+  bool hasKey(const std::string& sheet, const std::string& lang, const std::string& key);
+
+  LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
+
+  std::string readFile(const std::string&  filename);
+
+private:
+  std::map<std::string, LanguageStruct> m_languages;
+  std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>> m_map;
+  //std::shared_ptr<std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>>> m_map;
+
+};
