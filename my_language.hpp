@@ -51,7 +51,7 @@ class Language {
   /**
    * @brief Just for logging.
    */
-  void log();
+  void log() const;
 
   /**
    * @brief Checks for the existence of [shee][lang][key]
@@ -60,7 +60,7 @@ class Language {
    * @param key: word_key of the `myword` structure. e.g: error, warning
    * @return Returns true in case of success.
    */
-  bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
+  bool hasString(const std::string& sheet, const std::string& lang, const std::string& key) const;
 
   /**
    * @brief Returns [sheet][lang][key] value of the JSON.
@@ -78,26 +78,26 @@ class Language {
    * @param filename
    * @return Returns a std::string::empty() == false in case of success.
    */
-  std::string readFile(const std::string&  filename);
+  static std::string readFile(const std::string&  filename);
 
   /**
    * @brief Just a logging function.
    * @see log();
    */
-  void logWords();
+  void logWords() const;
 
   /**
    * @brief Just a logging function
    * @see log();
    */
-  void logLangs();
+  void logLangs() const;
 
   /**
    * @brief Just a logging function.
    * @param w
    * @see logWords();
    */
-  void displayWord(LanguageStruct const& w);
+  void displayWord(LanguageStruct const& w) const;
 
   /**
    * @brief Parse @var `m_filename` json

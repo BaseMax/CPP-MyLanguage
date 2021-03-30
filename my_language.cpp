@@ -23,7 +23,7 @@ std::string Language::getFile() const { return m_filename; }
 
 void Language::setFile(const std::string& filename) { m_filename = filename; }
 
-void Language::displayWord(const LanguageStruct& w) {
+void Language::displayWord(const LanguageStruct& w) const {
   std::cout << "\t\t\t" << "word_key: " << w.word_key << "\n";
   std::cout << "\t\t\t" << "module: " << w.module << "\n";
   std::cout << "\t\t\t" << "default_value: " << w.default_value << "\n";
@@ -39,7 +39,7 @@ std::string Language::readFile(const std::string& filename) {
   return str;
 }
 
-void Language::logLangs() {
+void Language::logLangs() const {
   std::cout << "---------------- [LOG LANGS] ---------------\n";
   for (auto const& sheet : m_map) {
     std::cout << sheet.first << ":\n";
@@ -50,7 +50,7 @@ void Language::logLangs() {
   }
 }
 
-void Language::logWords() {
+void Language::logWords() const {
   std::cout << "---------------- [LOG WORDS] ---------------\n";
   for (auto const& sheet : m_map) {
     std::cout << sheet.first << ":\n";
@@ -66,7 +66,7 @@ void Language::logWords() {
   }
 }
 
-void Language::log() {
+void Language::log() const {
   logLangs();
   logWords();
 }
@@ -119,7 +119,7 @@ void Language::parse() {
   }
 }
 
-bool Language::hasString(const std::string& sheet, const std::string& lang, const std::string& key) {
+bool Language::hasString(const std::string& sheet, const std::string& lang, const std::string& key) const {
   try {
     auto const __lang = m_map.at(sheet).at(lang);
     return __lang.find(key) != std::cend(__lang);
