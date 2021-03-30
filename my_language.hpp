@@ -13,18 +13,50 @@
 #include "json/json.hpp"
 
 using JSon = nlohmann::json;
+using JSonException = nlohmann::detail::exception;
 
 using if_streamer = std::ifstream;
 
-struct Globalization {
-  inline static JSon GET = JSon::parse(if_streamer("/Users/compez/drogon/build/Tegra/translations/contents2.json"));
-};
+//class Globalization {
+//public:
+//  Globalization() {
+
+//  }
+//  ~Globalization() {
+
+//  }
+//  static JSon parse() {
+//    JSon j;
+//    try {
+//      j = JSon::parse(if_streamer(getFile()));
+//    } catch (JSon::exception& e) {
+//      std::clog << e.what() << "\n";
+//    }
+//    return j;
+//  }
+
+//  inline static JSon GET = parse();
+
+//  inline static std::string getFile() noexcept {
+//    return m_filename;
+//  }
+
+//  void setFile(const std::string& filename) {
+//    if(m_filename != filename || m_filename.empty()) {
+//      m_filename = filename;
+//    }
+//  }
+
+//private:
+//  inline static std::string m_filename;
+
+
+//};
 
 class LanguageStruct {
 public:
 
-  static std::shared_ptr<LanguageStruct> getInstance;
-  //static LanguageStruct* getInstance;
+  static std::unique_ptr<LanguageStruct> getInstance;
 
   void deleteInstance();
 
@@ -35,6 +67,7 @@ public:
       const std::string& default_value ,
       const std::string& custom_value,
       bool status);
+
 public:
   std::string language() const;
   std::string code() const;
@@ -47,7 +80,6 @@ public:
   bool status() const;
 
 private:
-
   static LanguageStruct* m_instance;
 
   bool m_ltr = false;
@@ -68,18 +100,41 @@ public:
   Language();
   ~Language();
 
+  JSon GET;
+
+  [[nodiscard]] bool init() noexcept {
+    bool res = {false};
+    try {
+      GET = JSon::parse(if_streamer(getFile()));
+      res = true;
+    } catch (JSonException& e) {
+      std::clog << "Error Message : " << e.what() << "\n";
+      res = false;
+    }
+    return res;
+  }
+
+  std::string getFile() {
+    return m_filename;
+  }
+
+  void setFile(const std::string& filename) {
+    if(m_filename != filename || m_filename.empty()) {
+      m_filename = filename;
+    }
+  }
+
 public:
   void parse();
   void parseLangs();
   void parseWords();
 
-  void parseFile(const std::string&  filename);
+  void parseFile(const std::string& filename);
   void displayWord(LanguageStruct w);
 
   void log();
   void logLangs();
   void logWords();
-
 
   bool hasKey(const std::string& sheet, const std::string& lang, const std::string& key);
 
@@ -88,8 +143,8 @@ public:
   std::string readFile(const std::string&  filename);
 
 private:
+  std::string m_filename;
   std::map<std::string, LanguageStruct> m_languages;
   std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>> m_map;
-  //std::shared_ptr<std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>>> m_map;
-
 };
+
