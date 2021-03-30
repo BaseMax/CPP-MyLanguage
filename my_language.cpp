@@ -219,24 +219,12 @@ void Language::parse() {
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
 bool Language::hasString(const std::string& sheet, const std::string& lang, const std::string& key) {
-  for (auto s = m_map.begin(); s != m_map.end(); ++s) {
-    if (s->first != sheet) {
-      continue;
-    }
-    for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      if (itr->first != lang) {
-        continue;
-      }
-      auto childs = itr->second;
-      for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
-        if (itr2->first == key) {
-          return true;
-        }
-      }
-    }
+  try {
+    auto const __lang = m_map.at(sheet).at(lang);
+    return __lang.find(key) != std::cend(__lang);
+  } catch (...) {
+    return false;
   }
-
-  return false;
 }
 
 /*
