@@ -12,70 +12,70 @@
     }
   ],
   "global": {
-    "en_US": [
+  "en_US": [
       {
         "word_key": "name",
-        "module": "system",
-        "default_value": "Tegra CMS",
-        "custom_value": "",
-        "status": true
+	"module": "system",
+	"default_value": "Tegra CMS",
+	"custom_value": "",
+	"status": true
       },
       {
         "word_key": "version",
-        "module": "system",
-        "default_value": "Version",
-        "custom_value": "",
-        "status": true
+	"module": "system",
+	"default_value": "Version",
+	"custom_value": "",
+	"status": true
       }
     ],
-    "fa_IR": [
+  "fa_IR": [
       {
         "word_key": "name",
-        "module": "system",
-        "default_value": "سیستم مدیریت محتوای تِگرا",
-        "custom_value": "",
-        "status": true
+	"module": "system",
+	"default_value": "سیستم مدیریت محتوای تِگرا",
+	"custom_value": "",
+	"status": true
       },
       {
         "word_key": "version",
-        "module": "system",
-        "default_value": "نسخه",
-        "custom_value": "",
-        "status": true
+	"module": "system",
+	"default_value": "نسخه",
+	"custom_value": "",
+	"status": true
       }
     ]
   },
   "exceptions": {
-    "en_US": [
+  "en_US": [
       {
         "word_key": "error",
-        "module": "core",
-        "default_value": "Error",
-        "custom_value": "",
-        "status": true
+	"module": "core",
+	"default_value": "Error",
+	"custom_value": "",
+	"status": true
       },
       {
         "word_key": "warning",
-        "module": "core",
-        "default_value": "Warning",
-        "custom_value": "",
-        "status": true
+	"module": "core",
+	"default_value": "Warning",
+	"custom_value": "",
+	"status": true
       }
     ],
-    "fa_IR": [
+  "fa_IR": [
       {
         "word_key": "error",
-        "module": "core",
-        "default_value": "خطا",
-        "custom_value": "",
-        "status": true
+	"module": "core",
+	"default_value": "خطا",
+	"custom_value": "",
+	"status": true
       },
       {
         "word_key": "warning",
-        "module": "core",
-        "default_value": "اخطار",
-        "custom_value": "",
-        "status": true
+	"module": "core",
+	"default_value": "اخطار",
+	"custom_value": "",
+	"status": true
       }
     ]
   }
