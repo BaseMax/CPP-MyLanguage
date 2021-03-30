@@ -15,6 +15,9 @@ int main(int argc, const char * argv[]) {
 
     std::cout << lang.getString("exceptions", "en_US", "error").default_value() << "\n";
 
+
+
+
     std::cout << "------------------------------ [ TEST getString has_error ] -----------------------------\n";
 
     auto i = lang.getString("exceptions", "en_US", "_bad_keyword_bad_");
@@ -25,9 +28,11 @@ int main(int argc, const char * argv[]) {
         std::cout << i.has_error() << "\n";
     }
 
-    std::cout << "------------------------------ [ TEST hasKey ] -----------------------------\n";
 
-    bool j = lang.hasKey("exceptions", "en_US", "_bad_keyword_bad_");
+
+    std::cout << "------------------------------ [ TEST hasString ] -----------------------------\n";
+
+    bool j = lang.hasString("exceptions", "en_US", "_bad_keyword_bad_");
     if(j == true) {
         std::cout << "No error!\n" << "\n";
     }
@@ -35,13 +40,14 @@ int main(int argc, const char * argv[]) {
         std::cout << "A error...\n";
     }
 
-    j = lang.hasKey("exceptions", "en_US", "error");
+    j = lang.hasString("exceptions", "en_US", "error");
     if(j == true) {
         std::cout << "No error!\n" << "\n";
     }
     else {
         std::cout << "A error...\n";
     }
+
 
     std::cout << "------------------------------ [ TEST getString in another sheet ] -----------------------------\n";
 

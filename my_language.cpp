@@ -207,13 +207,13 @@ void Language::parseFile(const std::string& filename) {
 }
 
 /*
- * hasKey(lang, key)
+ * hasString(lang, key)
  * Arguments:
  * std::string sheet: name of your selected sheet
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
-bool Language::hasKey(const std::string& sheet, const std::string& lang, const std::string& key) {
+bool Language::hasString(const std::string& sheet, const std::string& lang, const std::string& key) {
   for (auto s = m_map.begin(); s != m_map.end(); ++s) {
     if(s->first != sheet) {
       continue;

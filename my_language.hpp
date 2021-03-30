@@ -136,7 +136,7 @@ public:
   void logLangs();
   void logWords();
 
-  bool hasKey(const std::string& sheet, const std::string& lang, const std::string& key);
+  bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
   LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
 
