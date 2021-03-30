@@ -53,21 +53,9 @@ using if_streamer = std::ifstream;
 
 //};
 
-struct LanguageStruct final {
-  bool ltr = false;
-  std::string language;
-  std::string  code;
-
-  bool has_error = true;
-  std::string word_key;
-  std::string module;
-  std::string default_value;
-  std::string custom_value;
-  // bool status;
-
-};
-
 class Language {
+  struct LanguageStruct;
+
  public:
   JSon GET;
 
@@ -96,6 +84,20 @@ class Language {
   std::string readFile(const std::string&  filename);
 
  private:
+  struct LanguageStruct final {
+    bool ltr = false;
+    std::string language;
+    std::string  code;
+
+    bool has_error = true;
+    std::string word_key;
+    std::string module;
+    std::string default_value;
+    std::string custom_value;
+    // bool status;
+
+  };
+
   // static LanguageStruct* m_instance;
   LanguageStruct m_instance;
 

@@ -172,7 +172,7 @@ bool Language::hasString(const std::string& sheet, const std::string& lang, cons
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
-LanguageStruct Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
+Language::LanguageStruct Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
   try {
     return m_map.at(sheet).at(lang).at(key);
   } catch (...) {
