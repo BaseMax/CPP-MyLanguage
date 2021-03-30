@@ -28,8 +28,10 @@ So you can try or improve this library for your use.
 and compile sample program using:
 
 ```
-g++ main.cpp my_language.cpp -o mylanguage-cpp-test -std=c++17
-./mylanguage-cpp-test
+$ mkdir build;
+$ cd build;
+$ cmake ..; make -j`nproc`
+$ cd output/bin;
 ```
 
 ## Sample program
