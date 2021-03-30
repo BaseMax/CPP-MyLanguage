@@ -1,9 +1,10 @@
 #include <iostream>
-#include "my_language.hpp"
+
+#include "Language/my_language.hpp"
 
 int main() {
   Core::Utility::Language lang;
-  lang.setFile("input.json");
+  lang.setFile("../test/input.json");
   lang.parse();
   lang.log();
 
