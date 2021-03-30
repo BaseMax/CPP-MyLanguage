@@ -247,24 +247,23 @@ bool Language::hasString(const std::string& sheet, const std::string& lang, cons
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
 LanguageStruct::Sptr Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
-  for (auto s = m_map.begin(); s != m_map.end(); ++s) {
-    if (s->first != sheet) {
+  for (auto const& __sheet : m_map) {
+    if (__sheet.first != sheet) {
       continue;
     }
-    for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      if (itr->first != lang) {
+    for (auto const& itr : __sheet.second) {
+      if (itr.first != lang) {
         continue;
       }
-      auto childs = itr->second;
-      for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
-        if (itr2->first == key) {
+      for (auto const& itr2 : itr.second) {
+        if (itr2.first == key) {
           // LanguageStruct *res;
           // *res = itr2->second;
           // return res;
 
           // return std::shared_ptr<LanguageStruct>(res);
 
-          LanguageStruct res = itr2->second;
+          LanguageStruct res = itr2.second;
           // return res;
           return std::make_shared<LanguageStruct>(res);
           // return itr2->second;
