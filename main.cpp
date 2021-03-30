@@ -3,26 +3,26 @@
 
 int main(int argc, const char * argv[]) {
 
-    MyLanguage lang;
-    // TODO: lang.parseFile("input.json");
+    Language lang;
+    lang.parseFile("input.json");
     lang.parse();
 
     lang.log();
 
-    std::cout << "------------------------------ [ TEST getKey ] -----------------------------\n";
+    std::cout << "------------------------------ [ TEST getString ] -----------------------------\n";
 
-    std::cout << lang.getKey("exceptions", "fa_IR", "error").default_value << "\n";
+    std::cout << lang.getString("exceptions", "fa_IR", "error").default_value() << "\n";
 
-    std::cout << lang.getKey("exceptions", "en_US", "error").default_value << "\n";
+    std::cout << lang.getString("exceptions", "en_US", "error").default_value() << "\n";
 
-    std::cout << "------------------------------ [ TEST getKey has_error ] -----------------------------\n";
+    std::cout << "------------------------------ [ TEST getString has_error ] -----------------------------\n";
 
-    auto i = lang.getKey("exceptions", "en_US", "_bad_keyword_bad_");
-    if(i.has_error) {
+    auto i = lang.getString("exceptions", "en_US", "_bad_keyword_bad_");
+    if(i.has_error()) {
         std::cout << "A error...\n";
     }
     else {
-        std::cout << i.has_error << "\n";
+        std::cout << i.has_error() << "\n";
     }
 
     std::cout << "------------------------------ [ TEST hasKey ] -----------------------------\n";
@@ -43,14 +43,14 @@ int main(int argc, const char * argv[]) {
         std::cout << "A error...\n";
     }
 
-    std::cout << "------------------------------ [ TEST getKey in another sheet ] -----------------------------\n";
+    std::cout << "------------------------------ [ TEST getString in another sheet ] -----------------------------\n";
 
-    auto k = lang.getKey("global", "fa_IR", "name");
-    if(k.has_error) {
+    auto k = lang.getString("global", "fa_IR", "name");
+    if(k.has_error()) {
         std::cout << "A error...\n";
     }
     else {
-        std::cout << k.default_value << std::endl;
+        std::cout << k.default_value() << std::endl;
     }
 
     return 0;
