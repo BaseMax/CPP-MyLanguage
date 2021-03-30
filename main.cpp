@@ -21,6 +21,7 @@ int main(int argc, const char * argv[]) {
     std::cout << "------------------------------ [ TEST getString has_error ] -----------------------------\n";
 
     auto i = lang.getString("exceptions", "en_US", "_bad_keyword_bad_");
+    std::cout << "...\n";
     if(i.has_error()) {
         std::cout << "A error...\n";
     }

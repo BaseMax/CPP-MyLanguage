@@ -12,6 +12,7 @@
 //  return this;
 //}
 
+
 std::unique_ptr<LanguageStruct> LanguageStruct::getInstance;
 
 LanguageStruct::LanguageStruct(bool ltr,
@@ -198,16 +199,7 @@ void Language::parse() {
 }
 
 /*
- * parseFile(filename)
- * Arguments:
- * std::string filename: path or filename to load JSON file. e.g: input.json
- */
-void Language::parseFile(const std::string& filename) {
-
-}
-
-/*
- * hasString(lang, key)
+ * hasString(sheet, lang, key)
  * Arguments:
  * std::string sheet: name of your selected sheet
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
@@ -235,7 +227,7 @@ bool Language::hasString(const std::string& sheet, const std::string& lang, cons
 }
 
 /*
- * getKey(lang, key)
+ * getString(sheet, lang, key)
  * Arguments:
  * std::string sheet: name of your selected sheet
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
@@ -253,12 +245,27 @@ LanguageStruct Language::getString(const std::string& sheet, const std::string& 
       auto childs = itr->second;
       for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
         if(itr2->first == key) {
+          // LanguageStruct *res;
+          // *res = itr2->second;
+          // return res;
+
+          // return std::shared_ptr<LanguageStruct>(res);
+
+          // LanguageStruct res = itr2->second;
           return itr2->second;
         }
       }
     }
   }
 
-  return *LanguageStruct::getInstance;
-  //return {false,"","","","",false};
+  // return std::shared_ptr<LanguageStruct>();
+  // return std::shared_ptr<LanguageStruct>(nullptr);
+
+  // return NULL;
+
+  // return LanguageStruct::getInstance;
+  // return *LanguageStruct::getInstance;
+
+  return {false,"","","","",false};
+  // return {};
 }

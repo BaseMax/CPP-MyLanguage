@@ -118,7 +118,12 @@ public:
     return m_filename;
   }
 
-  void setFile(const std::string& filename) {
+ /*
+ * setFile(filename)
+ * Arguments:
+ * std::string filename: path or filename to load JSON file. e.g: input.json
+ */
+ void setFile(const std::string& filename) {
     if(m_filename != filename || m_filename.empty()) {
       m_filename = filename;
     }
@@ -129,7 +134,6 @@ public:
   void parseLangs();
   void parseWords();
 
-  void parseFile(const std::string& filename);
   void displayWord(LanguageStruct w);
 
   void log();
@@ -138,6 +142,7 @@ public:
 
   bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
+  // std::shared_ptr<LanguageStruct> getString(const std::string& sheet, const std::string& lang, const std::string& key);
   LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
 
   std::string readFile(const std::string&  filename);
