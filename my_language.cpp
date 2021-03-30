@@ -12,7 +12,7 @@
 //  return this;
 //}
 
-std::shared_ptr<LanguageStruct> LanguageStruct::getInstance;
+std::unique_ptr<LanguageStruct> LanguageStruct::getInstance;
 
 LanguageStruct::LanguageStruct(bool ltr,
                                const std::string& word_key,
@@ -31,7 +31,7 @@ LanguageStruct::LanguageStruct(bool ltr,
 
 }
 
-Language::Language() {
+Language::Language(){
 
 }
 
@@ -123,14 +123,13 @@ void Language::logWords() {
 }
 
 void Language::log() {
-  std::cout << "log\n";
   logLangs();
   logWords();
 }
 
 void Language::parseLangs() {
-  std::cout << "parseLangs\n";
-  for (const auto& t : Globalization::GET["languages"]) {
+
+  for (const auto& t : GET["languages"]) {
     std::cout << t << "\n";
     //     {"code":"en_US","language":"english","ltr":true}
     //     {"code":"fa_IR","language":"persian","ltr":false}
@@ -147,7 +146,7 @@ void Language::parseLangs() {
 
     void Language::parseWords() {
   // std::cout << "parseWords\n";
-  auto items = Globalization::GET.items();
+  auto items = GET.items();
   for (const auto& [key, value] : items) {
     // key values are: exceptions, global, languages, ...
     // std::cout << "\n\n----------------------\n";
@@ -157,7 +156,7 @@ void Language::parseLangs() {
       // solved bug: terminate called after throwing an instance of 'nlohmann::detail::type_error' what():  [json.exception.type_error.305] cannot use operator[] with a string argument with string
       continue;
       }
-    for (auto t : Globalization::GET[ key ].items()) {
+    for (auto t : GET[ key ].items()) {
       // std::cout << t << "\n";
       std::map<std::string, LanguageStruct> v;
       for (auto i : t.value()) {
@@ -186,11 +185,16 @@ void Language::parseLangs() {
  * std::string filename: path or filename to load JSON file. e.g: input.json
  */
 void Language::parse() {
-  // call parseLangs
-  parseLangs();
 
-  // call parseWords
-  parseWords();
+  if(init()) {
+    // call parseLangs
+    parseLangs();
+
+    // call parseWords
+    parseWords();
+  } else {
+    std::clog << "Error on parsing!\n";
+  }
 }
 
 /*
@@ -198,13 +202,8 @@ void Language::parse() {
  * Arguments:
  * std::string filename: path or filename to load JSON file. e.g: input.json
  */
-void Language::parseFile(const std::string&  filename) {
-  // TODO
-  // struct Globalization {
-  //  inline static JSon GET = JSon::parse(if_streamer("input.json"));
-  // };
+void Language::parseFile(const std::string& filename) {
 
-  parse();
 }
 
 /*
