@@ -6,11 +6,11 @@
 # braces and indent
 style=google
 #style=gnu
-indent=spaces=4
+indent=spaces=2
 
 # indentation
 indent-switches
-indent-continuation=4
+indent-continuation=2
 indent-preproc-define
 indent-preproc-block
 min-conditional-indent=0

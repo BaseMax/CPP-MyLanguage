@@ -54,25 +54,24 @@ using if_streamer = std::ifstream;
 //};
 
 class LanguageStruct {
-public:
+ public:
+  using Sptr = std::shared_ptr<LanguageStruct>;
 
-  static std::unique_ptr<LanguageStruct> getInstance;
-
-  void deleteInstance();
-
+ public:
   LanguageStruct();
-
   LanguageStruct(
       bool ltr,
       const std::string& word_key,
       const std::string& module,
-      const std::string& default_value ,
+      const std::string& default_value,
       const std::string& custom_value
       // ,
       // bool status
-      );
+  );
 
-public:
+  inline static std::unique_ptr<LanguageStruct> getInstance;
+  void deleteInstance();
+
   std::string language() const;
   std::string code() const;
   bool ltr() const;
@@ -83,12 +82,12 @@ public:
   std::string custom_value() const;
   // bool status() const;
 
-private:
-  bool m_ltr = false;
+ private:
+  bool m_ltr;
   std::string m_language;
   std::string  m_code;
 
-  bool m_has_error = true;
+  bool m_has_error;
   std::string m_word_key;
   std::string m_module;
   std::string m_default_value;
@@ -98,58 +97,34 @@ private:
 };
 
 class Language {
-public:
-  Language();
-  ~Language();
-
+ public:
   JSon GET;
 
-  [[nodiscard]] bool init() noexcept {
-    bool res = {false};
-    try {
-      GET = JSon::parse(if_streamer(getFile()));
-      res = true;
-    } catch (JSonException& e) {
-      std::clog << "Error Message : " << e.what() << "\n";
-      res = false;
-    }
-    return res;
-  }
+  [[nodiscard]] bool init() noexcept;
 
-  std::string getFile() {
-    return m_filename;
-  }
+  std::string getFile() const;
 
- /*
- * setFile(filename)
- * Arguments:
- * std::string filename: path or filename to load JSON file. e.g: input.json
- */
- void setFile(const std::string& filename) {
-    if(m_filename != filename || m_filename.empty()) {
-      m_filename = filename;
-    }
-  }
+  /**
+  * @brief Set the input JSON file.
+  * @param path or filename to load JSON file. e.g: input.json
+  */
+  void setFile(const std::string& filename);
 
-public:
   void parse();
   void parseLangs();
   void parseWords();
-
   void displayWord(LanguageStruct w);
-
   void log();
   void logLangs();
   void logWords();
-
   bool hasString(const std::string& sheet, const std::string& lang, const std::string& key);
 
-  std::shared_ptr<LanguageStruct> getString(const std::string& sheet, const std::string& lang, const std::string& key);
+  LanguageStruct::Sptr getString(const std::string& sheet, const std::string& lang, const std::string& key);
   // LanguageStruct getString(const std::string& sheet, const std::string& lang, const std::string& key);
 
   std::string readFile(const std::string&  filename);
 
-private:
+ private:
   // static LanguageStruct* m_instance;
   LanguageStruct m_instance;
 
