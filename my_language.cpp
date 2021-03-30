@@ -95,7 +95,7 @@ void Language::displayWord(LanguageStruct w) {
 
 std::string Language::readFile(const std::string& filename) {
   std::ifstream inFile;
-  inFile.open("input.json");
+  inFile.open(filename);
   std::stringstream strStream;
   strStream << inFile.rdbuf();
   std::string str = strStream.str();
@@ -145,7 +145,7 @@ void Language::parseLangs() {
 
     std::string language_t = t["language"].get<std::string>();
     std::string code_t = t["code"].get<std::string>();
-    bool ltr_t = t["ltr"].get<bool>();
+//    bool ltr_t = t["ltr"].get<bool>();
 
     //            m_languages[code] = {
     //                false,"","","","",false
