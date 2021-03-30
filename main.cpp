@@ -4,7 +4,7 @@
 int main(int argc, const char * argv[]) {
 
     Language lang;
-    lang.parseFile("input.json");
+    lang.setFile("input.json");
     lang.parse();
 
     lang.log();
