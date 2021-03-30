@@ -22,6 +22,8 @@ class Language {
    * @brief The Language private data structure
    */
   struct LanguageStruct;
+  using Languages_t = std::map<std::string, LanguageStruct>;
+  using Sheet_t = std::map<std::string, Languages_t>;
 
  public:
   /**
@@ -132,7 +134,7 @@ class Language {
   LanguageStruct m_instance;
 
   std::string m_filename;
-  std::map<std::string, LanguageStruct> m_languages;
-  std::map<std::string, std::map<std::string, std::map<std::string, LanguageStruct>>> m_map;
+  Languages_t m_languages;
+  std::map<std::string, Sheet_t> m_map;
 };
 } // namespace Core::Utility

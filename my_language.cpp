@@ -19,13 +19,9 @@ bool Language::init() noexcept {
   return res;
 }
 
-std::string Language::getFile() const {
-  return m_filename;
-}
+std::string Language::getFile() const { return m_filename; }
 
-void Language::setFile(const std::string& filename) {
-  m_filename = filename;
-}
+void Language::setFile(const std::string& filename) { m_filename = filename; }
 
 void Language::displayWord(const LanguageStruct& w) {
   std::cout << "\t\t\t" << "word_key: " << w.word_key << "\n";
@@ -45,25 +41,26 @@ std::string Language::readFile(const std::string& filename) {
 
 void Language::logLangs() {
   std::cout << "---------------- [LOG LANGS] ---------------\n";
-  for (auto s = m_map.begin(); s != m_map.end(); ++s) {
-    std::cout << s->first << ":\n";
-    for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      std::cout << "\t" << itr->first << "\n";
+  for (auto const& sheet : m_map) {
+    std::cout << sheet.first << ":\n";
+
+    for (auto const& itr : sheet.second) {
+      std::cout << "\t" << itr.first << "\n";
     }
   }
-
 }
 
 void Language::logWords() {
   std::cout << "---------------- [LOG WORDS] ---------------\n";
-  for (auto s = m_map.begin(); s != m_map.end(); ++s) {
-    std::cout << s->first << ":\n";
-    for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      std::cout << "\t" << itr->first << "\n";
-      auto childs = itr->second;
-      for (auto itr = childs.begin(); itr != childs.end(); ++itr) {
-        std::cout << "\t\t" << itr->first << "\n";
-        displayWord(itr->second);
+  for (auto const& sheet : m_map) {
+    std::cout << sheet.first << ":\n";
+
+    for (auto const& itr : sheet.second) {
+      std::cout << "\t" << itr.first << "\n";
+
+      for (auto const& child : itr.second) {
+        std::cout << "\t\t" << itr.first << "\n";
+        displayWord(child.second);
       }
     }
   }
@@ -79,19 +76,20 @@ void Language::parseLangs() {
     std::cout << t << "\n";
     std::string language_t = t["language"].get<std::string>();
     std::string code_t = t["code"].get<std::string>();
+
+    /// FIXME: What is usage of language_t and code_t?
   }
 }
 
 void Language::parseWords() {
-  auto items = m_parsed_json.items();
-  for (const auto& [key, value] : items) {
-    std::map<std::string, std::map<std::string, LanguageStruct>> mysheet;
-    if (key == "languages") {
-      continue;
-    }
-    for (auto t : m_parsed_json[ key ].items()) {
-      std::map<std::string, LanguageStruct> v;
-      for (auto i : t.value()) {
+  try {
+    Sheet_t mysheet;
+
+    auto items = m_parsed_json.at("languages").at("languages").items();
+    for (auto const& item : items) {
+      Languages_t newItem;
+
+      for (auto const& i : item.value()) {
         LanguageStruct v_myword = {
           .ltr = false,
           .language = std::string(),
@@ -101,11 +99,14 @@ void Language::parseWords() {
           .default_value = i["default_value"].get<std::string>(),
           .custom_value = i["custom_value"].get<std::string>(),
         };
-        v.insert(std::pair<std::string, LanguageStruct>(i["word_key"].get<std::string>(), v_myword));
+        newItem.insert(std::pair<std::string, LanguageStruct>(i["word_key"].get<std::string>(), v_myword));
       }
-      mysheet[t.key()] = v;
+      mysheet[item.key()] = std::move(newItem);
     }
-    m_map[key] = mysheet;
+    m_map["languages"] = std::move(mysheet);
+
+  } catch (...) {
+    /// FIXME: Handle error if needed.
   }
 }
 
