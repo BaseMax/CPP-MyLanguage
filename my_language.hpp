@@ -55,9 +55,6 @@ using if_streamer = std::ifstream;
 
 class LanguageStruct {
  public:
-  using Sptr = std::shared_ptr<LanguageStruct>;
-
- public:
   LanguageStruct();
   LanguageStruct(
       bool ltr,
@@ -113,7 +110,7 @@ class Language {
   void parse();
   void parseLangs();
   void parseWords();
-  void displayWord(LanguageStruct w);
+  void displayWord(LanguageStruct const& w);
   void log();
   void logLangs();
   void logWords();

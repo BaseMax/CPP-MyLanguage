@@ -90,7 +90,7 @@ std::string LanguageStruct::custom_value() const {
 //   return m_status;
 // }
 
-void Language::displayWord(LanguageStruct w) {
+void Language::displayWord(const LanguageStruct& w) {
   std::cout << "\t\t\t" << "word_key: " << w.word_key() << "\n";
   std::cout << "\t\t\t" << "module: " << w.module() << "\n";
   std::cout << "\t\t\t" << "default_value: " << w.default_value() << "\n";

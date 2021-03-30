@@ -5,16 +5,12 @@ int main() {
   Language lang;
   lang.setFile("input.json");
   lang.parse();
-
   lang.log();
 
   std::cout << "------------------------------ [ TEST getString ] -----------------------------\n";
 
   std::cout << lang.getString("exceptions", "fa_IR", "error").default_value() << "\n";
-
   std::cout << lang.getString("exceptions", "en_US", "error").default_value() << "\n";
-
-
 
   std::cout << "------------------------------ [ TEST getString has_error ] -----------------------------\n";
 
@@ -45,7 +41,6 @@ int main() {
 
 
   std::cout << "------------------------------ [ TEST getString in another sheet ] -----------------------------\n";
-
   auto const k = lang.getString("global", "fa_IR", "name");
   if (k.has_error()) {
     std::cout << "A error...\n";
