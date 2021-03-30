@@ -72,10 +72,10 @@ void Language::log() const {
 }
 
 void Language::parseLangs() {
-  for (const auto& t : m_parsed_json["languages"]) {
+  for (const auto& t : m_parsed_json[JsonKeys::languages]) {
     std::cout << t << "\n";
-    std::string language_t = t["language"].get<std::string>();
-    std::string code_t = t["code"].get<std::string>();
+    std::string language_t = t[JsonKeys::language].get<std::string>();
+    std::string code_t = t[JsonKeys::code].get<std::string>();
 
     /// FIXME: What is usage of language_t and code_t?
   }
@@ -85,7 +85,7 @@ void Language::parseWords() {
   try {
     Sheet_t mysheet;
 
-    auto items = m_parsed_json.at("languages").at("languages").items();
+    auto items = m_parsed_json.at(JsonKeys::languages).at(JsonKeys::languages).items();
     for (auto const& item : items) {
       Languages_t newItem;
 
@@ -94,16 +94,16 @@ void Language::parseWords() {
           .ltr = false,
           .language = std::string(),
           .code = std::string(),
-          .word_key = i["word_key"].get<std::string>(),
-          .module = i["module"].get<std::string>(),
-          .default_value = i["default_value"].get<std::string>(),
-          .custom_value = i["custom_value"].get<std::string>(),
+          .word_key = i[JsonKeys::word_key].get<std::string>(),
+          .module = i[JsonKeys::module].get<std::string>(),
+          .default_value = i[JsonKeys::default_value].get<std::string>(),
+          .custom_value = i[JsonKeys::custom_value].get<std::string>(),
         };
-        newItem.insert(std::pair<std::string, LanguageStruct>(i["word_key"].get<std::string>(), v_myword));
+        newItem.insert({i[JsonKeys::word_key].get<std::string>(), v_myword});
       }
       mysheet[item.key()] = std::move(newItem);
     }
-    m_map["languages"] = std::move(mysheet);
+    m_map[JsonKeys::languages] = std::move(mysheet);
 
   } catch (...) {
     /// FIXME: Handle error if needed.

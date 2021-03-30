@@ -128,6 +128,15 @@ class Language {
     std::string custom_value;
     // bool status;
   };
+  struct JsonKeys final {
+    static constexpr auto languages = "languages";
+    static constexpr auto language = "language";
+    static constexpr auto code = "code";
+    static constexpr auto word_key = "word_key";
+    static constexpr auto module = "module";
+    static constexpr auto default_value = "default_value";
+    static constexpr auto custom_value = "custom_value";
+  };
 
  private:
   JSon m_parsed_json;
