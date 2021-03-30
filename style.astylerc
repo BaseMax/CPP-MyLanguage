@@ -1,0 +1,40 @@
+# Google Coding Style Options
+# C++  - https://google.github.io/styleguide/cppguide.html
+# Java - https://google.github.io/styleguide/javaguide.html
+# ObjC - https://google.github.io/styleguide/objcguide.xml
+
+# braces and indent
+style=google
+#style=gnu
+indent=spaces=2
+
+# indentation
+indent-switches
+indent-continuation=2
+indent-preproc-define
+indent-preproc-block
+min-conditional-indent=0
+max-continuation-indent=80
+indent-col1-comments
+
+# padding
+pad-oper
+pad-header
+unpad-paren
+align-pointer=type
+
+# formatting
+keep-one-line-blocks
+keep-one-line-statements
+convert-tabs
+close-templates
+add-braces
+add-one-line-braces
+
+# objective-c
+pad-method-prefix
+unpad-return-type
+unpad-param-type
+align-method-colon
+pad-method-colon=none
+

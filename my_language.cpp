@@ -12,42 +12,47 @@
 //  return this;
 //}
 
-
-std::unique_ptr<LanguageStruct> LanguageStruct::getInstance;
-
-LanguageStruct::LanguageStruct(){
-  m_has_error = true;
+LanguageStruct::LanguageStruct() : m_ltr(false), m_has_error(true) {
 }
 
 LanguageStruct::LanguageStruct(bool ltr,
                                const std::string& word_key,
                                const std::string& module,
-                               const std::string& default_value ,
+                               const std::string& default_value,
                                const std::string& custom_value
                                // ,
                                // bool status
-                               ) :
-                                              m_ltr(ltr),
-                                              m_word_key(word_key),
-                                              m_module(module),
-                                              m_default_value(default_value),
-                                              m_custom_value(custom_value)
-                                              // ,
-                                              // m_status(status)
+                              ) :
+  m_ltr(ltr),
+  m_word_key(word_key),
+  m_module(module),
+  m_default_value(default_value),
+  m_custom_value(custom_value)
+  // ,
+  // m_status(status)
 
 {
 
 }
 
-Language::Language(){
-
+bool Language::init() noexcept {
+  bool res = true;
+  try {
+    GET = JSon::parse(if_streamer(getFile()));
+  } catch (JSonException& e) {
+    std::clog << "Error Message : " << e.what() << "\n";
+    res = false;
+  }
+  return res;
 }
 
-
-Language::~Language() {
-
+std::string Language::getFile() const {
+  return m_filename;
 }
 
+void Language::setFile(const std::string& filename) {
+  m_filename = filename;
+}
 
 bool LanguageStruct::ltr() const {
   return m_ltr;
@@ -86,16 +91,16 @@ std::string LanguageStruct::custom_value() const {
 // }
 
 void Language::displayWord(LanguageStruct w) {
-  std::cout << "\t\t\t"<<"word_key: " << w.word_key() <<"\n";
-  std::cout << "\t\t\t"<<"module: " << w.module() <<"\n";
-  std::cout << "\t\t\t"<<"default_value: " << w.default_value() <<"\n";
-  std::cout << "\t\t\t"<<"custom_value: " << w.custom_value() <<"\n";
+  std::cout << "\t\t\t" << "word_key: " << w.word_key() << "\n";
+  std::cout << "\t\t\t" << "module: " << w.module() << "\n";
+  std::cout << "\t\t\t" << "default_value: " << w.default_value() << "\n";
+  std::cout << "\t\t\t" << "custom_value: " << w.custom_value() << "\n";
   // std::cout << "\t\t\t"<<"status: " << w.status() <<"\n";
 }
 
 std::string Language::readFile(const std::string& filename) {
   std::ifstream inFile;
-  inFile.open("input.json");
+  inFile.open(filename);
   std::stringstream strStream;
   strStream << inFile.rdbuf();
   std::string str = strStream.str();
@@ -121,7 +126,7 @@ void Language::logWords() {
   for (auto s = m_map.begin(); s != m_map.end(); ++s) {
     std::cout << s->first << ":\n";
     for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      std::cout << "\t"<<itr->first << "\n";
+      std::cout << "\t" << itr->first << "\n";
       auto childs = itr->second;
       for (auto itr = childs.begin(); itr != childs.end(); ++itr) {
         std::cout << "\t\t" << itr->first << "\n";
@@ -145,7 +150,7 @@ void Language::parseLangs() {
 
     std::string language_t = t["language"].get<std::string>();
     std::string code_t = t["code"].get<std::string>();
-    bool ltr_t = t["ltr"].get<bool>();
+    //    bool ltr_t = t["ltr"].get<bool>();
 
     //            m_languages[code] = {
     //                false,"","","","",false
@@ -161,10 +166,10 @@ void Language::parseWords() {
     // std::cout << "\n\n----------------------\n";
     // std::cout << key << " : " << value << "\n";
     std::map<std::string, std::map<std::string, LanguageStruct>> mysheet;
-    if(key == "languages") {
+    if (key == "languages") {
       // solved bug: terminate called after throwing an instance of 'nlohmann::detail::type_error' what():  [json.exception.type_error.305] cannot use operator[] with a string argument with string
       continue;
-      }
+    }
     for (auto t : GET[ key ].items()) {
       // std::cout << t << "\n";
       std::map<std::string, LanguageStruct> v;
@@ -173,13 +178,13 @@ void Language::parseWords() {
         // std::cout << i << "\n";
         // std::cout << i["word_key"].get<std::string>() << ":" << i["default_value"].get<std::string>() << std::endl;
         LanguageStruct v_myword = {
-            false,
-            i["word_key"].get<std::string>(),
-            i["module"].get<std::string>(),
-            i["default_value"].get<std::string>(),
-            i["custom_value"].get<std::string>(),
-            // i["status"],
-            };
+          false,
+          i["word_key"].get<std::string>(),
+          i["module"].get<std::string>(),
+          i["default_value"].get<std::string>(),
+          i["custom_value"].get<std::string>(),
+          // i["status"],
+        };
         v.insert(std::pair<std::string, LanguageStruct>(i["word_key"].get<std::string>(), v_myword));
       }
       mysheet[t.key()] = v;
@@ -195,7 +200,7 @@ void Language::parseWords() {
  */
 void Language::parse() {
 
-  if(init()) {
+  if (init()) {
     // call parseLangs
     parseLangs();
 
@@ -215,16 +220,16 @@ void Language::parse() {
  */
 bool Language::hasString(const std::string& sheet, const std::string& lang, const std::string& key) {
   for (auto s = m_map.begin(); s != m_map.end(); ++s) {
-    if(s->first != sheet) {
+    if (s->first != sheet) {
       continue;
     }
     for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      if(itr->first != lang) {
+      if (itr->first != lang) {
         continue;
       }
       auto childs = itr->second;
       for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
-        if(itr2->first == key) {
+        if (itr2->first == key) {
           return true;
         }
       }
@@ -241,36 +246,15 @@ bool Language::hasString(const std::string& sheet, const std::string& lang, cons
  * std::string lang: code of the language structure. e.g: en_US, or fa_IR
  * std::string key: word_key of the `myword` structure. e.g: error, warning
  */
-std::shared_ptr<LanguageStruct> Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
-  for (auto s = m_map.begin(); s != m_map.end(); ++s) {
-    if(s->first != sheet) {
-      continue;
-    }
-    for (auto itr = s->second.begin(); itr != s->second.end(); ++itr) {
-      if(itr->first != lang) {
-        continue;
-      }
-      auto childs = itr->second;
-      for (auto itr2 = childs.begin(); itr2 != childs.end(); ++itr2) {
-        if(itr2->first == key) {
-          // LanguageStruct *res;
-          // *res = itr2->second;
-          // return res;
-
-          // return std::shared_ptr<LanguageStruct>(res);
-
-          LanguageStruct res = itr2->second;
-          // return res;
-          return std::make_shared<LanguageStruct>(res);
-          // return itr2->second;
-        }
-      }
-    }
+LanguageStruct Language::getString(const std::string& sheet, const std::string& lang, const std::string& key) {
+  try {
+    return m_map.at(sheet).at(lang).at(key);
+  } catch (...) {
+    return m_instance;
   }
 
   // return std::shared_ptr<LanguageStruct>();
   // return std::shared_ptr<LanguageStruct>(m_instance);
-  return std::make_shared<LanguageStruct>(m_instance);
   // return std::make_shared<LanguageStruct>(nullptr);
   // return m_instance;
   // return std::make_shared<LanguageStruct>(LanguageStruct::getInstance);
