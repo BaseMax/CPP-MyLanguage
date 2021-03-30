@@ -57,10 +57,7 @@ class Language {
   struct LanguageStruct;
 
  public:
-  JSon GET;
-
   [[nodiscard]] bool init() noexcept;
-
   std::string getFile() const;
 
   /**
@@ -95,9 +92,10 @@ class Language {
     std::string default_value;
     std::string custom_value;
     // bool status;
-
   };
 
+ private:
+  JSon m_parsed_json;
   // static LanguageStruct* m_instance;
   LanguageStruct m_instance;
 

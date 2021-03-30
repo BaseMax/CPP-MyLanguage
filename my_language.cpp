@@ -10,7 +10,7 @@
 bool Language::init() noexcept {
   bool res = true;
   try {
-    GET = JSon::parse(if_streamer(getFile()));
+    m_parsed_json = JSon::parse(if_streamer(getFile()));
   } catch (JSonException& e) {
     std::clog << "Error Message : " << e.what() << "\n";
     res = false;
@@ -79,7 +79,7 @@ void Language::log() {
 
 void Language::parseLangs() {
 
-  for (const auto& t : GET["languages"]) {
+  for (const auto& t : m_parsed_json["languages"]) {
     std::cout << t << "\n";
     //     {"code":"en_US","language":"english","ltr":true}
     //     {"code":"fa_IR","language":"persian","ltr":false}
@@ -96,7 +96,7 @@ void Language::parseLangs() {
 
 void Language::parseWords() {
   // std::cout << "parseWords\n";
-  auto items = GET.items();
+  auto items = m_parsed_json.items();
   for (const auto& [key, value] : items) {
     // key values are: exceptions, global, languages, ...
     // std::cout << "\n\n----------------------\n";
@@ -106,7 +106,7 @@ void Language::parseWords() {
       // solved bug: terminate called after throwing an instance of 'nlohmann::detail::type_error' what():  [json.exception.type_error.305] cannot use operator[] with a string argument with string
       continue;
     }
-    for (auto t : GET[ key ].items()) {
+    for (auto t : m_parsed_json[ key ].items()) {
       // std::cout << t << "\n";
       std::map<std::string, LanguageStruct> v;
       for (auto i : t.value()) {
