@@ -5,7 +5,13 @@ cmake_minimum_required(VERSION 3.1)
 ### Chosse the project name, This section
 ###
 ###
-project(mylanguage-cpp)
+set(PROJECT_EXE_NAME mylanguage-cpp)
+set(PROJECT_STATIC_LIB_NAME ${PROJECT_EXE_NAME}-lib-static)
+set(PROJECT_SHARED_LIB_NAME ${PROJECT_EXE_NAME}-lib-shared)
+
+project(${PROJECT_STATIC_LIB_NAME})
+project(${PROJECT_SHARED_LIB_NAME})
+project(${PROJECT_EXE_NAME})
 
 ###
 ###
@@ -26,6 +32,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 ###
 set(DIST_PATH ${PROJECT_BINARY_DIR}/output)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${DIST_PATH}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${DIST_PATH}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${DIST_PATH}/lib)
 
 ###
 ###
@@ -52,20 +60,28 @@ file(GLOB         CppFiles          source/*.cpp)
 
 include_directories(include)
 
-set(${PROJECT_NAME}_HEADERS
+set(${PROJECT_EXE_NAME}_HEADERS
   ${HFiles}
 )
 
-set(${PROJECT_NAME}_SOURCES
+set(${PROJECT_EXE_NAME}_SOURCES
   ${CppFiles}
 )
+
+set(${PROJECT_EXE_NAME}_LIB_SOURCES
+  ${${PROJECT_EXE_NAME}_SOURCES}
+)
+list(REMOVE_ITEM ${${PROJECT_EXE_NAME}_LIB_SOURCES} ./source/main.cpp)
+
 
 ###
 ###
 ### Create project executable.
 ###
 ###
-add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES} ${${PROJECT_NAME}_HEADERS})
+add_executable(${PROJECT_EXE_NAME} ${${PROJECT_EXE_NAME}_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
+add_library(${PROJECT_STATIC_LIB_NAME} STATIC ${${PROJECT_EXE_NAME}_LIB_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
+add_library(${PROJECT_SHARED_LIB_NAME} SHARED ${${PROJECT_EXE_NAME}_LIB_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
 
 
 ###
@@ -74,9 +90,12 @@ add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES} ${${PROJECT_NAME}_HEAD
 ###
 ###
 set(DIST_TEST_PATH ${DIST_PATH}/test)
+set(DIST_HEADER_PATH ${DIST_PATH}/lib/include)
 
 file(GLOB TEST_FILES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
 file(COPY ${TEST_FILES_PATH} DESTINATION ${DIST_TEST_PATH})
+file(COPY ${${PROJECT_EXE_NAME}_HEADERS} DESTINATION ${DIST_HEADER_PATH})
+
 install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
