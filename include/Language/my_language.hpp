@@ -5,12 +5,17 @@
  * @Repository: https://github.com/BaseMax/CPP-MyLanguage
  */
 
+#ifndef MY_LANGUAGE_HEADER_FILE
+#define MY_LANGUAGE_HEADER_FILE
+
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <sstream> //std::stringstream
 
-#include "json.hpp"
+#if __has_include ("json.hpp")
+  #include "json.hpp"
+#endif
 
 namespace Core::Utility {
 using JSon = nlohmann::json;
@@ -147,3 +152,5 @@ class Language {
   std::map<std::string, Sheet_t> m_map;
 };
 } // namespace Core::Utility
+
+#endif

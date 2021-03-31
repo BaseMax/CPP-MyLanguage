@@ -5,7 +5,12 @@
  * @Repository: https://github.com/BaseMax/CPP-MyLanguage
  */
 
-#include "Language/my_language.hpp"
+#ifndef MY_LANGUAGE_SOURCE_FILE
+#define MY_LANGUAGE_SOURCE_FILE
+
+#if __has_include ("Language/my_language.hpp")
+  #include "Language/my_language.hpp"
+#endif
 
 namespace Core::Utility {
 bool Language::init() noexcept {
@@ -136,3 +141,5 @@ Language::LanguageStruct Language::getString(const std::string& sheet, const std
   }
 }
 } // namespace Core::Utility
+
+#endif

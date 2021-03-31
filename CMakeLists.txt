@@ -15,6 +15,27 @@ project(${PROJECT_EXE_NAME})
 
 ###
 ###
+### Utility Functions:
+###   - Thanks to: https://stackoverflow.com/a/15283110/9248466
+###
+###
+function(contcat IN_FILE OUT_FILE)
+  file(READ ${IN_FILE} CONTENTS)
+  file(APPEND ${OUT_FILE} "\n${CONTENTS}")
+endfunction()
+
+###
+###
+### Build Options
+###
+###
+option(lang_STATIC_LIB_BUILD "Build Static Version" ON)
+option(lang_SHARED_LIB_BUILD "Build Shared Version" ON)
+option(lang_BINARY_BUILD "Build Executable Version" ON)
+option(lang_HEADER_ONLY_BUILD "Header Only Version" ON)
+
+###
+###
 ### Default settings for project:
 ###   - Current directory included
 ###   - Project standard sets to C++17 and force it.
@@ -46,17 +67,20 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -pedantic-error
 ###
 ### Third-party
 ### - Nlohmann::Json
+### - Catch2: TDD
 ###
 ###
 include_directories(third-party/json)
+include_directories(third-party/catch2)
 
 ###
 ###
 ### Finding the needed files to build the project
 ###
 ###
-file(GLOB         HFiles            include/Language/*.h include/Language/*.hpp)
-file(GLOB         CppFiles          source/*.cpp)
+file(GLOB  HFiles            include/Language/*.h include/Language/*.hpp)
+file(GLOB  PRE_BUILD_HEADERS third-party/catch2/*.hpp third-party/json/*.hpp)
+file(GLOB  CppFiles          source/*.cpp)
 
 include_directories(include)
 
@@ -66,22 +90,56 @@ set(${PROJECT_EXE_NAME}_HEADERS
 
 set(${PROJECT_EXE_NAME}_SOURCES
   ${CppFiles}
+  ${PRE_BUILD_HEADERS}
 )
 
 set(${PROJECT_EXE_NAME}_LIB_SOURCES
   ${${PROJECT_EXE_NAME}_SOURCES}
+  ${PRE_BUILD_HEADERS}
 )
-list(REMOVE_ITEM ${${PROJECT_EXE_NAME}_LIB_SOURCES} ./source/main.cpp)
+list(REMOVE_ITEM ${PROJECT_EXE_NAME}_LIB_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/main.cpp)
 
+set(${ROJECT_HEADER_ONLY}_FILES
+  ${PRE_BUILD_HEADERS}
+  ${HFiles}
+  ${${PROJECT_EXE_NAME}_LIB_SOURCES}
+)
+list(REMOVE_ITEM ${ROJECT_HEADER_ONLY}_FILES ${CMAKE_CURRENT_SOURCE_DIR}/third-party/catch2/catch.hpp)
 
 ###
 ###
 ### Create project executable.
 ###
 ###
-add_executable(${PROJECT_EXE_NAME} ${${PROJECT_EXE_NAME}_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
-add_library(${PROJECT_STATIC_LIB_NAME} STATIC ${${PROJECT_EXE_NAME}_LIB_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
-add_library(${PROJECT_SHARED_LIB_NAME} SHARED ${${PROJECT_EXE_NAME}_LIB_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
+if(lang_STATIC_LIB_BUILD)
+ add_library(${PROJECT_STATIC_LIB_NAME} STATIC ${${PROJECT_EXE_NAME}_LIB_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
+endif()
+
+if(lang_SHARED_LIB_BUILD)
+ add_library(${PROJECT_SHARED_LIB_NAME} SHARED ${${PROJECT_EXE_NAME}_LIB_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
+endif()
+
+if(lang_BINARY_BUILD)
+ add_executable(${PROJECT_EXE_NAME} ${${PROJECT_EXE_NAME}_SOURCES} ${${PROJECT_EXE_NAME}_HEADERS})
+endif()
+
+if(lang_HEADER_ONLY_BUILD)
+ set(HEADER_ONLY_FILE_PATH ${DIST_PATH}/lib/${PROJECT_EXE_NAME}-headeronly.hpp)
+ file(WRITE ${HEADER_ONLY_FILE_PATH} "")
+
+ foreach(FILE ${${ROJECT_HEADER_ONLY}_FILES})
+   contcat(${FILE} ${HEADER_ONLY_FILE_PATH})
+ endforeach()
+endif()
+
+###
+###
+### Adding prebuild headers
+###
+###
+target_precompile_headers(${PROJECT_EXE_NAME} PRIVATE ${PRE_BUILD_HEADERS})
+target_precompile_headers(${PROJECT_STATIC_LIB_NAME} PRIVATE ${PRE_BUILD_HEADERS})
+target_precompile_headers(${PROJECT_SHARED_LIB_NAME} PRIVATE ${PRE_BUILD_HEADERS})
 
 
 ###
