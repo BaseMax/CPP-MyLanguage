@@ -78,12 +78,15 @@ void Language::log() const {
 
 void Language::parseLangs() {
   for (const auto& t : m_parsed_json[JsonKeys::languages]) {
-    std::cout << t << "\n";
-    std::string language_t = t[JsonKeys::language].get<std::string>();
-    std::string code_t = t[JsonKeys::code].get<std::string>();
+    auto const language_t = t[JsonKeys::language].get<std::string>();
+    auto const code_t = t[JsonKeys::code].get<std::string>();
 
-    /// FIXME: What is usage of language_t and code_t?
+    /// FIXME: Check it.
+    m_map[language_t] = {
+      {code_t, {}}
+    };
   }
+
 }
 
 void Language::parseWords() {
