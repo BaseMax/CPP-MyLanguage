@@ -1,8 +1,3 @@
-# Google Coding Style Options
-# C++  - https://google.github.io/styleguide/cppguide.html
-# Java - https://google.github.io/styleguide/javaguide.html
-# ObjC - https://google.github.io/styleguide/objcguide.xml
-
 # braces and indent
 style=google
 #style=gnu
@@ -37,4 +32,3 @@ unpad-return-type
 unpad-param-type
 align-method-colon
 pad-method-colon=none
-
