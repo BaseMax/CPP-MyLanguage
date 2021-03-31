@@ -19,24 +19,29 @@ Did you translate words to different languages? Do your software support multi l
 
 So you can try or improve this library for your use.
 
-## Using
+## How To Build
 
-```cpp
-#include "my_language.hpp"
-```
-
-and compile sample program using:
+Thanks to CMake, it's simple:
 
 ```
 $ mkdir build;
 $ cd build;
 $ cmake ..; make -j`nproc`
-$ cd output/bin;
 ```
 
-## Sample program
+After a successful build, you have:
+1. The static build: `output/lib`
+2. The shared build: `output/lib`
+3. The binary build: `output/bin`
+4. The header files: `output/lib/include`  
+
+Let me know if it's not enough for you.
+
+## Example
 
 ```cpp
+#include "my_language.hpp"
+
 Language lang;
 lang.setFile("input.json");
 lang.parse();
