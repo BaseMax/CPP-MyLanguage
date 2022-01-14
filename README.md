@@ -100,9 +100,7 @@ else {
 
 ## Acknowledgment
 
-First of all, I have to thank Mr. Asadzadeh because this library was written at his request.
-
-> Thank a lots from Mr. Ghasem Ramezani Manesh for his review and improving this library.
+Thank a lots from Mr. Ghasem Ramezani Manesh for his review and improving this library.
 
 I'm not good in c++ so maybe some parts are not well, In any case you can contribute or improve this one and I would accept and will merge this with love )
 
